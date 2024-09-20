@@ -40,9 +40,16 @@ class MainActivity : AppCompatActivity() {
 
                 val factorial: Int = calcFactorial(numberValue)
 
-                toastHandler(toast, factorial.toString())
+                for (i in 1..numberValue) {
+                    val calculated = i * (i + 1) * (i + 2);
 
-                return@addTextChangedListener;
+                    if (calculated == factorial) {
+                        toastHandler(toast, "Удалось найти числа: ${i}, ${i + 1}, ${i + 2}");
+                        return@addTextChangedListener;
+                    }
+                }
+
+                toastHandler(toast, "Не удалось найти таких чисел");
             }
         }
     }
