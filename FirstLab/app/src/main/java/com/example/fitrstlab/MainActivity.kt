@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        var toastText: String = "";
-        val toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(this, "", Toast.LENGTH_SHORT)
 
         val editText = findViewById<EditText>(R.id.editText)
 
@@ -36,28 +35,23 @@ class MainActivity : AppCompatActivity() {
             val numberValue = editTextValue.toIntOrNull()
             if (numberValue != null) {
                 if (numberValue in 0..9) {
-                    toastText = "Это цифра!"
-                    toastHandler(toast, toastText)
+                    toastHandler(toast, "Это цифра!")
                 }
                 return@addTextChangedListener;
             }
 
             when (editTextValue) {
                 "&" -> {
-                    toastText = "Это спец символ!"
-                    toastHandler(toast, toastText)
+                    toastHandler(toast, "Это спец символ!")
                 }
                 "#" -> {
-                    toastText = "Это спец символ!"
-                    toastHandler(toast, toastText)
+                    toastHandler(toast, "Это спец символ!")
                 }
                 "<" -> {
-                    toastText = "Это спец символ!"
-                    toastHandler(toast, toastText)
+                    toastHandler(toast, "Это спец символ!")
                 }
                 else -> {
-                    toastText = "Непредусмотренный вариант!"
-                    toastHandler(toast, toastText)
+                    toastHandler(toast, "Непредусмотренный вариант!")
                 }
             }
         }
