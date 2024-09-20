@@ -38,14 +38,22 @@ class MainActivity : AppCompatActivity() {
                     return@addTextChangedListener;
                 }
 
-                var facrotial: Int = 1
-                for (i in 2..numberValue) {
-                    facrotial *= i;
-                }
+                val factorial: Int = calcFactorial(numberValue)
+
+                toastHandler(toast, factorial.toString())
 
                 return@addTextChangedListener;
             }
         }
+    }
+
+    private fun calcFactorial(number: Int): Int {
+        var acc: Int = 1;
+        for (i in 2..number) {
+            acc *= i;
+        }
+
+        return acc;
     }
 
     private fun toastHandler(toast: Toast, text: String) {
