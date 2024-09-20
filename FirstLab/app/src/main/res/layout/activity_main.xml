@@ -19,8 +19,9 @@
 
     <EditText
         android:layout_width="180dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:inputType="text"
+        android:id="@+id/editText"
         android:labelFor="@id/label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
