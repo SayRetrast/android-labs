@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SecondLab</string>
+    <string name="label">Натуральное число:</string>
 </resources>
