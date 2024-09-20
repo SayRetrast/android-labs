@@ -1,6 +1,7 @@
 package com.example.secondlab
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,37 +21,37 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val button = findViewById<Button>(R.id.btn)
+        button.setOnClickListener {
+            this.findNumbers()
+        }
+    }
+
+    private  fun findNumbers() {
         val toast = Toast.makeText(this, "", Toast.LENGTH_SHORT)
 
         val editText = findViewById<EditText>(R.id.editText)
+        val editTextValue = editText.text.toString()
 
-        editText.addTextChangedListener {
-            val editTextValue = editText.text.toString()
-
-            if (editTextValue == "") {
-                return@addTextChangedListener;
+        val numberValue = editTextValue.toIntOrNull()
+        if (numberValue != null) {
+            if (numberValue <= 0) {
+                toastHandler(toast, "Это не натуральное число");
+                return;
             }
 
-            val numberValue = editTextValue.toIntOrNull()
-            if (numberValue != null) {
-                if (numberValue <= 0) {
-                    toastHandler(toast, "Это не натуральное число");
-                    return@addTextChangedListener;
+            val factorial: Int = calcFactorial(numberValue)
+
+            for (i in 1..numberValue) {
+                val calculated = i * (i + 1) * (i + 2);
+
+                if (calculated == factorial) {
+                    toastHandler(toast, "Удалось найти числа: ${i}, ${i + 1}, ${i + 2}");
+                    return;
                 }
-
-                val factorial: Int = calcFactorial(numberValue)
-
-                for (i in 1..numberValue) {
-                    val calculated = i * (i + 1) * (i + 2);
-
-                    if (calculated == factorial) {
-                        toastHandler(toast, "Удалось найти числа: ${i}, ${i + 1}, ${i + 2}");
-                        return@addTextChangedListener;
-                    }
-                }
-
-                toastHandler(toast, "Не удалось найти таких чисел");
             }
+
+            toastHandler(toast, "Не удалось найти таких чисел");
         }
     }
 
