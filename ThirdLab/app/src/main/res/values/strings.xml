@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ThirdLab</string>
+    <string name="label">Строка:</string>
+    <string name="btnText">Палиндром</string>
 </resources>
