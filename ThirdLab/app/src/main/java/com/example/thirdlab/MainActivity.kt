@@ -33,35 +33,25 @@ class MainActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editText)
         val editTextValue = editText.text.toString()
 
-        val numberValue = editTextValue.toIntOrNull()
-        if (numberValue != null) {
-            if (numberValue <= 0) {
-                toastHandler(toast, "Это не натуральное число");
+        var formattedString = ""
+        for (i in editTextValue.indices) {
+            val letter = editTextValue[i]
+            if (letter.isLetter()) {
+                formattedString += letter.lowercaseChar()
+            }
+        }
+
+        for (i in formattedString.indices) {
+            val letterOne = formattedString[i]
+            val letterTwo = formattedString[formattedString.length - 1 - i]
+
+            if (letterOne != letterTwo) {
+                toastHandler(toast, "Строка не палиндром")
                 return;
             }
-
-            val factorial: Int = calcFactorial(numberValue)
-
-            for (i in 1..numberValue) {
-                val calculated = i * (i + 1) * (i + 2);
-
-                if (calculated == factorial) {
-                    toastHandler(toast, "Удалось найти числа: ${i}, ${i + 1}, ${i + 2}");
-                    return;
-                }
-            }
-
-            toastHandler(toast, "Не удалось найти таких чисел");
-        }
-    }
-
-    private fun calcFactorial(number: Int): Int {
-        var acc: Int = 1;
-        for (i in 2..number) {
-            acc *= i;
         }
 
-        return acc;
+        toastHandler(toast, "Строка палиндром")
     }
 
     private fun toastHandler(toast: Toast, text: String) {
