@@ -31,15 +31,15 @@ class MainActivity : AppCompatActivity() {
             ),
             mapOf(
                 "question" to "Является ли вода химическим соединением?",
-                "answer" to false,
+                "answer" to true,
             ),
             mapOf(
                 "question" to "Могут ли некоторые животные спать под водой?",
-                "answer" to false,
+                "answer" to true,
             ),
             mapOf(
                 "question" to "Является ли электричество формой энергии?",
-                "answer" to false,
+                "answer" to true,
             ),
         )
         var currentQuestion = 0
@@ -71,9 +71,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonNext.setOnClickListener {
-            currentQuestion += 1
-            textView.text = questions[currentQuestion]["question"].toString()
+            if (buttonTrue.visibility == View.VISIBLE && buttonFalse.visibility == View.VISIBLE) {
+                return@setOnClickListener
+            }
 
+            currentQuestion += 1
+
+            if (currentQuestion == 5) {
+                buttonNext.isEnabled = false
+                buttonNext.isClickable = false
+                buttonNext.visibility = View.INVISIBLE
+
+                textView.text = "Количество правильных ответов: ${correctAnswers}"
+
+                return@setOnClickListener
+            }
+
+            textView.text = questions[currentQuestion]["question"].toString()
             buttonFalse.visibility = View.VISIBLE
             buttonTrue.visibility = View.VISIBLE
         }
