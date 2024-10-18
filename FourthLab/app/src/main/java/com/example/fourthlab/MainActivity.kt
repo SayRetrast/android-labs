@@ -1,6 +1,8 @@
 package com.example.fourthlab
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -40,9 +42,40 @@ class MainActivity : AppCompatActivity() {
                 "answer" to false,
             ),
         )
-        val currentQuestion = 0
+        var currentQuestion = 0
+        var correctAnswers = 0
 
         val textView: TextView = findViewById(R.id.question)
         textView.text = questions[currentQuestion]["question"].toString()
+
+        val buttonFalse: Button = findViewById(R.id.button_false)
+        val buttonTrue: Button = findViewById(R.id.button_true)
+        val buttonNext: Button = findViewById(R.id.button_next)
+
+        buttonFalse.setOnClickListener {
+            if (questions[currentQuestion]["answer"] == false) {
+                correctAnswers += 1
+            }
+
+            buttonFalse.visibility = View.INVISIBLE
+            buttonTrue.visibility = View.INVISIBLE
+        }
+
+        buttonTrue.setOnClickListener {
+            if (questions[currentQuestion]["answer"] == true) {
+                correctAnswers += 1
+            }
+
+            buttonFalse.visibility = View.INVISIBLE
+            buttonTrue.visibility = View.INVISIBLE
+        }
+
+        buttonNext.setOnClickListener {
+            currentQuestion += 1
+            textView.text = questions[currentQuestion]["question"].toString()
+
+            buttonFalse.visibility = View.VISIBLE
+            buttonTrue.visibility = View.VISIBLE
+        }
     }
 }
