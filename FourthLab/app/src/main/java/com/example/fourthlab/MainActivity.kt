@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
             textView.text = questionText
         })
 
-        quizViewModel.correctAnswers.observe(this, Observer {
-            if (quizViewModel.currentQuestion.value == 5) {
+        quizViewModel.currentQuestion.observe(this, Observer { currentQuestion ->
+            if (currentQuestion == 5) {
                 textView.text = quizViewModel.getFinalScore()
                 buttonFalse.visibility = View.INVISIBLE
                 buttonTrue.visibility = View.INVISIBLE

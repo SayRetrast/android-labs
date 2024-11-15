@@ -20,12 +20,12 @@ class QuizViewModel : ViewModel() {
     val correctAnswers: LiveData<Int> get() = _correctAnswers
 
     private val _questionText = MutableLiveData<String>().apply {
-        value = questions[_currentQuestion.value ?: 0]["question"].toString()
+        value = questions[_currentQuestion.value ?: 0]["question"].toString() + " ${_currentQuestion.value}"
     }
     val questionText: LiveData<String> get() = _questionText
 
     private fun updateQuestionText() {
-        _questionText.value = questions[_currentQuestion.value ?: 0]["question"].toString()
+        _questionText.value = questions[_currentQuestion.value ?: 0]["question"].toString() + " ${_currentQuestion.value}"
     }
 
     fun checkAnswer(isTrue: Boolean) {
@@ -37,9 +37,10 @@ class QuizViewModel : ViewModel() {
 
     fun nextQuestion() {
         val nextQuestionIndex = (_currentQuestion.value ?: 0) + 1
+        _currentQuestion.value = nextQuestionIndex
+
         if (nextQuestionIndex < questions.size) {
-            _currentQuestion.value = nextQuestionIndex
-            _questionText.value = questions[nextQuestionIndex]["question"].toString()
+            _questionText.value = questions[nextQuestionIndex]["question"].toString() + " ${_currentQuestion.value}"
         }
     }
 
@@ -50,6 +51,6 @@ class QuizViewModel : ViewModel() {
     fun restoreState(questionIndex: Int, correctAnswersCount: Int) {
         _currentQuestion.value = questionIndex
         _correctAnswers.value = correctAnswersCount
-        updateQuestionText() // Восстанавливаем текст вопроса
+        updateQuestionText()
     }
 }
