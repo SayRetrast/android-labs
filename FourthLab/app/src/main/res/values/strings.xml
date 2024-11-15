@@ -7,4 +7,5 @@
     <string name="button_cheat">Cheat</string>
     <string name="show_answer">Show answer</string>
     <string name="close_cheat">Back</string>
+    <string name="android_api">Android API: </string>
 </resources>
