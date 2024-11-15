@@ -24,6 +24,10 @@ class QuizViewModel : ViewModel() {
     }
     val questionText: LiveData<String> get() = _questionText
 
+    private fun updateQuestionText() {
+        _questionText.value = questions[_currentQuestion.value ?: 0]["question"].toString()
+    }
+
     fun checkAnswer(isTrue: Boolean) {
         val correctAnswer = questions[_currentQuestion.value ?: 0]["answer"] as Boolean
         if (isTrue == correctAnswer) {
@@ -41,5 +45,11 @@ class QuizViewModel : ViewModel() {
 
     fun getFinalScore(): String {
         return "Количество правильных ответов: ${_correctAnswers.value}"
+    }
+
+    fun restoreState(questionIndex: Int, correctAnswersCount: Int) {
+        _currentQuestion.value = questionIndex
+        _correctAnswers.value = correctAnswersCount
+        updateQuestionText() // Восстанавливаем текст вопроса
     }
 }
