@@ -1,5 +1,6 @@
 package com.example.labfifth
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -48,7 +49,11 @@ class MainActivity : AppCompatActivity() {
             val summaryPrice = pagesCount * price
             val summaryPriceWithDiscount = summaryPrice - summaryPrice.toDouble() / 100 * discount
 
-            Toast.makeText(this, summaryPriceWithDiscount.toString(), Toast.LENGTH_SHORT).show()
+            val summaryPriceIntent = Intent(this, SummaryPriceActivity::class.java).apply {
+                putExtra("SUMMARY", summaryPriceWithDiscount)
+            }
+
+            startActivity(summaryPriceIntent)
         }
 
         discountSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
