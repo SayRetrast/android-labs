@@ -3,4 +3,8 @@
     <string name="button_false">False</string>
     <string name="button_true">True</string>
     <string name="button_next">Next</string>
+    <string name="cheat_answer">Вы уверены что хотите узнать ответ?</string>
+    <string name="button_cheat">Cheat</string>
+    <string name="show_answer">Show answer</string>
+    <string name="close_cheat">Back</string>
 </resources>
