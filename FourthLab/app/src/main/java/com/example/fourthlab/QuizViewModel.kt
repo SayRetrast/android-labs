@@ -16,6 +16,9 @@ class QuizViewModel : ViewModel() {
     private val _currentQuestion = MutableLiveData<Int>().apply { value = 0 }
     val currentQuestion: LiveData<Int> get() = _currentQuestion
 
+    private val _cheatsCount = MutableLiveData<Int>().apply { value = 3 }
+    val cheatsCount: LiveData<Int> get() = _cheatsCount
+
     private val _correctAnswers = MutableLiveData<Int>().apply { value = 0 }
     val correctAnswers: LiveData<Int> get() = _correctAnswers
 
@@ -54,6 +57,10 @@ class QuizViewModel : ViewModel() {
 
     fun getCurrentAnswer(): Boolean {
         return questions[_currentQuestion.value ?: 0]["answer"] as Boolean
+    }
+
+    fun reduceCheatsCount() {
+        _cheatsCount.value = (_cheatsCount.value ?: 3) - 1
     }
 
     fun restoreState(questionIndex: Int, correctAnswersCount: Int) {

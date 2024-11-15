@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonTrue: Button
     private lateinit var buttonNext: Button
     private lateinit var buttonCheat: Button
+    private lateinit var cheatsCountTextView: TextView
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -39,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         buttonTrue = findViewById(R.id.button_true)
         buttonNext = findViewById(R.id.button_next)
         buttonCheat = findViewById(R.id.button_cheat)
+        cheatsCountTextView = findViewById(R.id.cheats_count)
+
+        var cheatsCountText = "Количество подсказок: ${quizViewModel.cheatsCount.value}"
+        cheatsCountTextView.text = cheatsCountText
 
         quizViewModel.questionText.observe(this, Observer { questionText ->
             textView.text = questionText
@@ -51,6 +56,17 @@ class MainActivity : AppCompatActivity() {
                 buttonTrue.visibility = View.INVISIBLE
                 buttonNext.visibility = View.INVISIBLE
                 buttonCheat.visibility = View.INVISIBLE
+                cheatsCountTextView.visibility = View.INVISIBLE
+            }
+        })
+
+        quizViewModel.cheatsCount.observe(this, Observer { cheatsCount ->
+            cheatsCountText = "Количество подсказок: ${quizViewModel.cheatsCount.value}"
+            cheatsCountTextView.text = cheatsCountText
+
+            if (cheatsCount == 0) {
+                buttonCheat.isEnabled = false
+                buttonCheat.isClickable = false
             }
         })
 
@@ -87,6 +103,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonCheat.setOnClickListener {
+            quizViewModel.reduceCheatsCount()
+
             val correctAnswer = quizViewModel.getCurrentAnswer()
 
             val cheatIntent = Intent(this, CheatActivity::class.java).apply {
