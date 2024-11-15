@@ -48,6 +48,10 @@ class QuizViewModel : ViewModel() {
         return "Количество правильных ответов: ${_correctAnswers.value}"
     }
 
+    fun getCurrentAnswer(): Boolean {
+        return questions[_currentQuestion.value ?: 0]["answer"] as Boolean
+    }
+
     fun restoreState(questionIndex: Int, correctAnswersCount: Int) {
         _currentQuestion.value = questionIndex
         _correctAnswers.value = correctAnswersCount

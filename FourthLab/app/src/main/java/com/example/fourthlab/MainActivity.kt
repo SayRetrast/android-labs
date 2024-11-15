@@ -1,5 +1,6 @@
 package com.example.fourthlab
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonFalse: Button
     private lateinit var buttonTrue: Button
     private lateinit var buttonNext: Button
+    private lateinit var buttonCheat: Button
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         buttonFalse = findViewById(R.id.button_false)
         buttonTrue = findViewById(R.id.button_true)
         buttonNext = findViewById(R.id.button_next)
+        buttonCheat = findViewById(R.id.button_cheat)
 
         quizViewModel.questionText.observe(this, Observer { questionText ->
             textView.text = questionText
@@ -47,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 buttonFalse.visibility = View.INVISIBLE
                 buttonTrue.visibility = View.INVISIBLE
                 buttonNext.visibility = View.INVISIBLE
+                buttonCheat.visibility = View.INVISIBLE
             }
         })
 
@@ -54,12 +58,14 @@ class MainActivity : AppCompatActivity() {
             quizViewModel.checkAnswer(isTrue = false)
             buttonFalse.visibility = View.INVISIBLE
             buttonTrue.visibility = View.INVISIBLE
+            buttonCheat.visibility = View.INVISIBLE
         }
 
         buttonTrue.setOnClickListener {
             quizViewModel.checkAnswer(isTrue = true)
             buttonFalse.visibility = View.INVISIBLE
             buttonTrue.visibility = View.INVISIBLE
+            buttonCheat.visibility = View.INVISIBLE
         }
 
         buttonNext.setOnClickListener {
@@ -76,7 +82,18 @@ class MainActivity : AppCompatActivity() {
             } else {
                 buttonFalse.visibility = View.VISIBLE
                 buttonTrue.visibility = View.VISIBLE
+                buttonCheat.visibility = View.VISIBLE
             }
+        }
+
+        buttonCheat.setOnClickListener {
+            val correctAnswer = quizViewModel.getCurrentAnswer()
+
+            val cheatIntent = Intent(this, CheatActivity::class.java).apply {
+                putExtra("ANSWER", correctAnswer)
+            }
+
+            startActivity(cheatIntent)
         }
     }
 }
