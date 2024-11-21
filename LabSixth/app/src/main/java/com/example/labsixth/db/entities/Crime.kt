@@ -7,8 +7,8 @@ import java.util.Date
 
 @Entity
 data class Crime (
-    @PrimaryKey() val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "date") val date: Date?,
+    @ColumnInfo(name = "date") val date: String?,
     @ColumnInfo(name = "is_solver") val isSolved: Boolean = false
 )
