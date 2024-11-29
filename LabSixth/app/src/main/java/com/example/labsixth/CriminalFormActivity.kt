@@ -1,15 +1,11 @@
 package com.example.labsixth
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.DatePicker
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -21,8 +17,7 @@ class CriminalFormActivity : AppCompatActivity() {
     private lateinit var addCriminalButton: Button
     private lateinit var isSolvedCheckBox: CheckBox
     private lateinit var backButton: Button
-
-    private val crimeViewModel: CrimeViewModel by viewModels()
+    private lateinit var datePicker: DatePicker
 
     private val crimeDao = db.crimeDao()
 
@@ -40,12 +35,19 @@ class CriminalFormActivity : AppCompatActivity() {
         addCriminalButton = findViewById(R.id.add_criminal_button)
         isSolvedCheckBox = findViewById(R.id.solved_checkbox)
         backButton = findViewById(R.id.back_button)
+        datePicker = findViewById(R.id.date_picker)
 
         addCriminalButton.setOnClickListener {
             val criminalTitle = titleEditText.text.toString()
             val isCriminalSolved = isSolvedCheckBox.isChecked
 
-            crimeDao.insert(Crime(title = criminalTitle, date = null, isSolved = isCriminalSolved))
+            val day = datePicker.dayOfMonth
+            val month = datePicker.month
+            val year = datePicker.year
+
+            val criminalDate = "${day}-${month}-${year}"
+
+            crimeDao.insert(Crime(title = criminalTitle, date = criminalDate, isSolved = isCriminalSolved))
 
             finish()
         }

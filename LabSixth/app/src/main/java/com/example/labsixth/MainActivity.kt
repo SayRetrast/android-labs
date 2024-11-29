@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         crimes.observe(this, Observer { crimes ->
             crimes.forEachIndexed { index, crime ->
-                val textViewText = "Title: ${crime.title} (${if (crime.isSolved) "solved" else "not solved"})"
+                val textViewText = "${crime.date} | Title: ${crime.title} (${if (crime.isSolved) "solved" else "not solved"})"
 
                 val textView = TextView(this).apply {
                     id = crime.id
