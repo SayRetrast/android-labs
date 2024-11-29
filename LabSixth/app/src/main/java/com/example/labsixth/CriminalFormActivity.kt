@@ -1,10 +1,15 @@
 package com.example.labsixth
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,6 +21,8 @@ class CriminalFormActivity : AppCompatActivity() {
     private lateinit var addCriminalButton: Button
     private lateinit var isSolvedCheckBox: CheckBox
     private lateinit var backButton: Button
+
+    private val crimeViewModel: CrimeViewModel by viewModels()
 
     private val crimeDao = db.crimeDao()
 
@@ -34,7 +41,6 @@ class CriminalFormActivity : AppCompatActivity() {
         isSolvedCheckBox = findViewById(R.id.solved_checkbox)
         backButton = findViewById(R.id.back_button)
 
-
         addCriminalButton.setOnClickListener {
             val criminalTitle = titleEditText.text.toString()
             val isCriminalSolved = isSolvedCheckBox.isChecked
@@ -48,4 +54,5 @@ class CriminalFormActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }
