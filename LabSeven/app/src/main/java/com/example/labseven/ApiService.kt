@@ -9,6 +9,7 @@ interface ApiService {
     suspend fun getPhotos(
         @Query("method") method: String = "flickr.photos.getRecent",
         @Query("api_key") apiKey: String = "6561003dd145624ad45fd196d3bbc37a",
+        @Query("extras") extras: String = "url_sq",
         @Query("format") format: String = "json",
         @Query("nojsoncallback") noJsonCallback: Int = 1
     ): Response<PhotosResponse>
@@ -28,5 +29,6 @@ data class Photo(
     val secret: String,
     val server: String,
     val farm: Int,
-    val title: String
+    val title: String,
+    val url_sq: String
 )

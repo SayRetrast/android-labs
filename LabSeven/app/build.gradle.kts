@@ -52,6 +52,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.runtime.livedata)
+
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
@@ -67,9 +68,11 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.picasso:picasso:2.8")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
