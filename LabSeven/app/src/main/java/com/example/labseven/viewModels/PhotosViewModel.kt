@@ -11,6 +11,15 @@ class PhotosViewModel: ViewModel() {
     private val apiService = RetrofitInstance.api
 
     val photos = mutableStateOf<List<Photo>>(listOf())
+//    val newPhoto = mutableStateOf<Photo>(Photo(
+//        "",
+//        "",
+//        "",
+//        "",
+//        0,
+//        "",
+//        ""
+//    ))
 
     init {
         fetchPhotos()
