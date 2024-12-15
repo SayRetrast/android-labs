@@ -1,11 +1,13 @@
-package com.example.labseven
+package com.example.labseven.viewModels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.labseven.Photo
+import com.example.labseven.RetrofitInstance
 import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class PhotosViewModel: ViewModel() {
     private val apiService = RetrofitInstance.api
 
     val photos = mutableStateOf<List<Photo>>(listOf())
@@ -26,5 +28,9 @@ class MainViewModel: ViewModel() {
                 // Handle errors here
             }
         }
+    }
+
+    fun clearPhotos() {
+        photos.value = listOf()
     }
 }

@@ -13,6 +13,16 @@ interface ApiService {
         @Query("format") format: String = "json",
         @Query("nojsoncallback") noJsonCallback: Int = 1
     ): Response<PhotosResponse>
+
+    @GET("services/rest/")
+    suspend fun searchPhotos(
+        @Query("method") method: String = "flickr.photos.search",
+        @Query("api_key") apiKey: String = "6561003dd145624ad45fd196d3bbc37a",
+        @Query("text") searchText: String,
+        @Query("extras") extras: String = "url_sq",
+        @Query("format") format: String = "json",
+        @Query("nojsoncallback") noJsonCallback: Int = 1
+    ): Response<PhotosResponse>
 }
 
 data class PhotosResponse(

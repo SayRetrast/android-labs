@@ -1,4 +1,4 @@
-package com.example.labseven
+package com.example.labseven.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,10 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
+import com.example.labseven.viewModels.PhotosViewModel
 
 @Composable
 fun PhotoList() {
-    val viewModel: MainViewModel = viewModel()
+    val viewModel: PhotosViewModel = viewModel()
     val photos = viewModel.photos.value
 
     LazyVerticalGrid(
