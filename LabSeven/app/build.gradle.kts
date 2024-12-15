@@ -66,9 +66,10 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.retrofit)
-//    implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.picasso:picasso:2.8")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -15,13 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.labseven.ui.theme.LabSevenTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PhotoList(viewModel)
+            PhotoList()
         }
     }
 }

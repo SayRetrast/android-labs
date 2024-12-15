@@ -1,36 +1,31 @@
 package com.example.labseven
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun PhotoList(viewModel: MainViewModel) {
-    val fetchedPhotos by viewModel.photos.observeAsState(emptyList())
+fun PhotoList() {
+    val viewModel: MainViewModel = viewModel()
+    val photos = viewModel.photos.value
 
-    LaunchedEffect(Unit) {
-        viewModel.fetchPhotos()
-    }
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        if (fetchedPhotos.isEmpty()) {
-            Text(text = "Loading...")
-        } else {
-            LazyColumn {
-                items(fetchedPhotos) { fetchedPhoto ->
-                    Text(text = fetchedPhoto.title)
-                    HorizontalDivider()
-                }
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        contentPadding = PaddingValues(8.dp),
+    ) {
+        items(photos) {photo ->
+            Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                Text(text = photo.title, color = Color(0, 0, 0))
             }
         }
     }
