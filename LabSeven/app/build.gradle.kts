@@ -76,6 +76,8 @@ dependencies {
 
     implementation("androidx.work:work-runtime-ktx:2.8.1")
 
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

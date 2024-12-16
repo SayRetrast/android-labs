@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.labseven.Screen
 import com.example.labseven.viewModels.PhotosViewModel
 import com.example.labseven.viewModels.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GalleryScreen() {
+fun GalleryScreen(navController: NavController) {
     val photosViewModel: PhotosViewModel = viewModel()
     val searchViewModel: SearchViewModel = viewModel()
 
@@ -100,6 +103,10 @@ fun GalleryScreen() {
                     }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
+                }
+
+                IconButton(onClick = { navController.navigate(route = Screen.Favourite.route) }) {
+                    Icon(Icons.Filled.Star, contentDescription = "Favorite Screen")
                 }
             }
         )
