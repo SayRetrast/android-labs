@@ -6,23 +6,21 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.labseven.Photo
 import com.example.labseven.checkIfIsFavourite
 import com.example.labseven.db.PhotoDao
 import com.example.labseven.db.PhotoEntity
-import com.example.labseven.viewModels.PhotosViewModel
 
 @Composable
-fun PhotoList(photoDao: PhotoDao, favoritePhotos: List<PhotoEntity>) {
-    val viewModel: PhotosViewModel = viewModel()
-    val photos = viewModel.photos.value
-
+fun FavouritePhotoList(favouritePhotos: List<PhotoEntity>, photoDao: PhotoDao) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(8.dp),
     ) {
-        items(photos) {photo ->
-            PhotoItem(photoDao = photoDao, photo = photo, isFavourite = checkIfIsFavourite(favoritePhotos, photo))
+        items(favouritePhotos) {photo ->
+            val photoObj = Photo(id = photo.id, title = photo.title, url_sq = photo.url_sq)
+            PhotoItem(photoDao = photoDao, photo = photoObj, isFavourite = checkIfIsFavourite(favoritePhotos = favouritePhotos, photo = photoObj))
         }
     }
 }
+

@@ -30,12 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.labseven.Screen
+import com.example.labseven.db.db
 import com.example.labseven.viewModels.PhotosViewModel
 import com.example.labseven.viewModels.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(navController: NavController) {
+    val photoDao = db.photoDao()
+    val favouritePhotos = photoDao.getAll()
+
     val photosViewModel: PhotosViewModel = viewModel()
     val searchViewModel: SearchViewModel = viewModel()
 
@@ -45,9 +49,9 @@ fun GalleryScreen(navController: NavController) {
 
     Box {
         if(!isSearched) {
-            PhotoList()
+            PhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos)
         } else {
-            SearchPhotoList()
+            SearchPhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos)
         }
 
         TopAppBar(
