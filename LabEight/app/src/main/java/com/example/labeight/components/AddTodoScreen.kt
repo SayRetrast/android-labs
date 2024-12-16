@@ -25,7 +25,7 @@ fun AddTodoScreen(navController: NavController) {
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
             title = {
-                Text(text = "Add todo" )
+                Text(text = "Add todo")
             },
             actions = {
                 IconButton(onClick = { navController.navigate(route = Screen.Todos.route) }) {
