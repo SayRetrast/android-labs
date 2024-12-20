@@ -12,15 +12,22 @@ import com.example.labseven.db.PhotoDao
 import com.example.labseven.db.PhotoEntity
 
 @Composable
-fun FavouritePhotoList(favouritePhotos: List<PhotoEntity>, photoDao: PhotoDao) {
+fun FavouritePhotoList(
+    favouritePhotos: List<PhotoEntity>,
+    photoDao: PhotoDao,
+    contentPadding: PaddingValues
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(8.dp),
+        contentPadding = contentPadding,
     ) {
-        items(favouritePhotos) {photo ->
+        items(favouritePhotos) { photo ->
             val photoObj = Photo(id = photo.id, title = photo.title, url_sq = photo.url_sq)
-            PhotoItem(photoDao = photoDao, photo = photoObj, isFavourite = checkIfIsFavourite(favoritePhotos = favouritePhotos, photo = photoObj))
+            PhotoItem(
+                photoDao = photoDao,
+                photo = photoObj,
+                isFavourite = checkIfIsFavourite(favoritePhotos = favouritePhotos, photo = photoObj)
+            )
         }
     }
 }
-

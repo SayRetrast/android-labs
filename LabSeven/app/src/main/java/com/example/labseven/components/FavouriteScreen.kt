@@ -8,15 +8,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.example.labseven.Screen
-import com.example.labseven.db.PhotoEntity
 import com.example.labseven.db.db
 
 
@@ -26,26 +24,34 @@ fun FavouriteScreen(navController: NavController) {
     val photoDao = db.photoDao()
     val favouritePhotos = photoDao.getAll()
 
-    Box {
-        FavouritePhotoList(favouritePhotos = favouritePhotos, photoDao = photoDao)
-
-        TopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary,
-            ),
-            title = {
-                Text(text = "Favorite photos" )
-            },
-            actions = {
-                IconButton(onClick = { navController.navigate(route = Screen.Gallery.route) }) {
-                    Icon(Icons.Filled.Home, contentDescription = "Gallery Screen")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text(text = "Favorite photos")
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate(route = Screen.Gallery.route) }) {
+                        Icon(Icons.Filled.Home, contentDescription = "Gallery Screen")
+                    }
+                    IconButton(onClick = {
+                        photoDao.deleteAll()
+                        navController.navigate(route = Screen.Favourite.route)
+                    }) {
+                        Icon(Icons.Filled.Delete, contentDescription = "Delete Favourite Photos")
+                    }
                 }
-                IconButton(onClick = { photoDao.deleteAll(); navController.navigate(route = Screen.Favourite.route) }) {
-                    Icon(Icons.Filled.Delete, contentDescription = "Delete Favourite Photos")
-                }
-            }
+            )
+        }
+    ) { paddingValues ->
+        FavouritePhotoList(
+            favouritePhotos = favouritePhotos,
+            photoDao = photoDao,
+            contentPadding = paddingValues
         )
     }
 }
-

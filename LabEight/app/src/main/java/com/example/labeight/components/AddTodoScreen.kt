@@ -19,6 +19,10 @@ import com.example.labeight.Screen
 @Composable
 fun AddTodoScreen(navController: NavController) {
     Box {
+        AddTodoForm()
+
+        Text(text = "test")
+
         TopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,

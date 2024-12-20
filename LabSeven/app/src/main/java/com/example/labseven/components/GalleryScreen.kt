@@ -14,6 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -47,72 +48,74 @@ fun GalleryScreen(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     var isSearched by remember { mutableStateOf(false) }
 
-    Box {
-        if(!isSearched) {
-            PhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos)
-        } else {
-            SearchPhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos)
-        }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    if (!isSearchActive) {
+                        Text(text = if (!isSearched) "Gallery" else "Searched photos")
+                    } else {
+                        TextField(
+                            value = searchText,
+                            onValueChange = { searchText = it },
+                            placeholder = { Text("Search...") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                            keyboardActions = KeyboardActions(onSearch = {
+                                isSearched = true
+                                isSearchActive = false
 
-        TopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary,
-            ),
-            title = {
-                if (!isSearchActive) {
-                    Text(text = if (!isSearched) "Gallery" else "Searched photos")
-                } else {
-                    TextField(
-                        value = searchText,
-                        onValueChange = { searchText = it },
-                        placeholder = { Text("Search...") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(onSearch = {
-                            isSearched = true
-                            isSearchActive = false
-
-                            photosViewModel.clearPhotos()
-                            searchViewModel.findPhotos(searchText)
-                        }),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            cursorColor = MaterialTheme.colorScheme.primary,
-                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp)
-                    )
-                }
-            },
-            actions = {
-                IconButton(onClick = {
-                    isSearchActive = !isSearchActive
-                    searchText = ""
-                }) {
-                    Icon(if(!isSearchActive) {Icons.Filled.Search} else {Icons.Filled.Close}, contentDescription = "Search")
-                }
-
-                if (isSearched) {
+                                photosViewModel.clearPhotos()
+                                searchViewModel.findPhotos(searchText)
+                            }),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.primary,
+                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                                unfocusedIndicatorColor = MaterialTheme.colorScheme.primaryContainer,
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 8.dp)
+                        )
+                    }
+                },
+                actions = {
                     IconButton(onClick = {
-                        isSearched = false
-                        isSearchActive = false
+                        isSearchActive = !isSearchActive
                         searchText = ""
-
-                        searchViewModel.clearFoundPhotos()
-                        photosViewModel.fetchPhotos()
                     }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(if (!isSearchActive) { Icons.Filled.Search } else { Icons.Filled.Close }, contentDescription = "Search")
+                    }
+
+                    if (isSearched) {
+                        IconButton(onClick = {
+                            isSearched = false
+                            isSearchActive = false
+                            searchText = ""
+
+                            searchViewModel.clearFoundPhotos()
+                            photosViewModel.fetchPhotos()
+                        }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
+                    }
+
+                    IconButton(onClick = { navController.navigate(route = Screen.Favourite.route) }) {
+                        Icon(Icons.Filled.Star, contentDescription = "Favorite Screen")
                     }
                 }
-
-                IconButton(onClick = { navController.navigate(route = Screen.Favourite.route) }) {
-                    Icon(Icons.Filled.Star, contentDescription = "Favorite Screen")
-                }
-            }
-        )
+            )
+        }
+    ) { paddingValues ->
+        if (!isSearched) {
+            PhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos, contentPadding = paddingValues)
+        } else {
+            SearchPhotoList(photoDao = photoDao, favoritePhotos = favouritePhotos, contentPadding = paddingValues)
+        }
     }
 }

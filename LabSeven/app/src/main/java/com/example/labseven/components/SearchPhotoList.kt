@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.labseven.checkIfIsFavourite
 import com.example.labseven.db.PhotoDao
@@ -14,7 +13,7 @@ import com.example.labseven.db.PhotoEntity
 import com.example.labseven.viewModels.SearchViewModel
 
 @Composable
-fun SearchPhotoList(photoDao: PhotoDao, favoritePhotos: List<PhotoEntity>) {
+fun SearchPhotoList(photoDao: PhotoDao, favoritePhotos: List<PhotoEntity>, contentPadding: PaddingValues) {
     val viewModel: SearchViewModel = viewModel()
     val foundPhotos = viewModel.foundPhotos.value
 
@@ -23,9 +22,9 @@ fun SearchPhotoList(photoDao: PhotoDao, favoritePhotos: List<PhotoEntity>) {
     } else {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(8.dp),
+            contentPadding = contentPadding,
         ) {
-            items(foundPhotos) {photo ->
+            items(foundPhotos) { photo ->
                 PhotoItem(photoDao = photoDao, photo = photo, isFavourite = checkIfIsFavourite(favoritePhotos, photo))
             }
         }
