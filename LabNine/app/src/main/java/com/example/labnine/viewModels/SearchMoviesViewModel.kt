@@ -1,6 +1,5 @@
 package com.example.labnine.viewModels
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,8 +23,6 @@ class SearchMoviesViewModel: ViewModel() {
 
                 if (response.isSuccessful) {
                     foundMovies.value = response.body()?.Search!!
-                    Log.d( "Debuggg", "HERE")
-                    Log.d( "Debuggg", foundMovies.value[0].Title)
                 }
             } catch (e: Exception) {
                 // Handle errors here

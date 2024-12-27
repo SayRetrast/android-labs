@@ -22,7 +22,7 @@ fun FoundMovieCard() {
     val isMovieFound = viewModel.isMovieFound.value
 
     if (!isMovieFound) {
-        Text(text = "Loading...")
+        Text(text = "")
     } else {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -58,11 +58,13 @@ fun FoundMovieCard() {
                 )
             }
 
-            Text(
-                text = movie.Genre!!,
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
+            if (movie.Genre != null) {
+                Text(
+                    text = movie.Genre,
+                    color = Color.Gray,
+                    fontSize = 14.sp
+                )
+            }
 
             Button(
                 onClick = {},

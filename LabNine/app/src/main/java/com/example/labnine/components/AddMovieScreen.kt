@@ -26,15 +26,31 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.labnine.Screen
+import com.example.labnine.toMovie
 import com.example.labnine.viewModels.SearchMovieViewModel
+import com.google.gson.JsonSyntaxException
+import java.net.URLDecoder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddMovieScreen(navController: NavController) {
     val viewModel: SearchMovieViewModel = viewModel()
 
-    val movieTitleState = remember { mutableStateOf("") }
-    val movieYearState = remember { mutableStateOf("") }
+    val backStackEntry = navController.currentBackStackEntry
+    val encodedMovieJson = backStackEntry?.arguments?.getString("movieJson")
+    val movieJson = encodedMovieJson?.let { URLDecoder.decode(it, "UTF-8") }
+    val initialMovie = if (!movieJson.isNullOrEmpty()) {
+        try {
+            movieJson.toMovie()
+        } catch (e: JsonSyntaxException) {
+            null
+        }
+    } else {
+        null
+    }
+
+    val movieTitleState = remember { mutableStateOf(initialMovie?.Title ?: "") }
+    val movieYearState = remember { mutableStateOf(initialMovie?.Year ?: "") }
 
     val foundMovie = viewModel.foundMovie.value
     val isMovieFound = viewModel.isMovieFound.value
@@ -43,6 +59,12 @@ fun AddMovieScreen(navController: NavController) {
         if (isMovieFound) {
             movieTitleState.value = foundMovie.Title
             movieYearState.value = foundMovie.Year
+        }
+    }
+
+    LaunchedEffect(initialMovie) {
+        if (initialMovie != null) {
+            viewModel.setMovie(initialMovie)
         }
     }
 
@@ -94,10 +116,7 @@ fun AddMovieScreen(navController: NavController) {
                 Text(text = "Search Movie")
             }
 
-            if (isMovieFound) {
-                FoundMovieCard()
-            }
+            FoundMovieCard()
         }
     }
 }
-

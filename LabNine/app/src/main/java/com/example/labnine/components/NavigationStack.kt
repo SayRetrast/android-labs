@@ -1,9 +1,11 @@
 package com.example.labnine.components
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.labnine.Screen
 
 @Composable
@@ -22,7 +24,11 @@ fun NavigationStack() {
         }
 
         composable(
-            route = Screen.AddMovie.route
+            route = Screen.AddMovie.route,
+            arguments = listOf(navArgument("movieJson") {
+                type = NavType.StringType
+                nullable = true
+            })
         ) {
             AddMovieScreen(navController)
         }

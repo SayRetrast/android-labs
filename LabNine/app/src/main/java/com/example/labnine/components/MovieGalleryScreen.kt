@@ -35,7 +35,7 @@ fun MovieGalleryScreen(navController: NavController) {
                     IconButton(onClick = { navController.navigate(route = Screen.SearchMovies.route) }) {
                         Icon(Icons.Filled.Search, contentDescription = "Search")
                     }
-                    IconButton(onClick = { navController.navigate(route = Screen.AddMovie.route) }) {
+                    IconButton(onClick = { navController.navigate(Screen.AddMovie.createRoute(null)) }) {
                         Icon(Icons.Filled.Add, contentDescription = "Add movie")
                     }
                 }

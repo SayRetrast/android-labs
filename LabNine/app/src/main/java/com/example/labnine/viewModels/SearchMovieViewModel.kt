@@ -1,6 +1,5 @@
 package com.example.labnine.viewModels
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,12 +21,15 @@ class SearchMovieViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     foundMovie.value = response.body()!!
                     isMovieFound.value = true
-                    Log.d( "Debuggg", "HERE")
-                    Log.d( "Debuggg", foundMovie.value.Title)
                 }
             } catch (e: Exception) {
                 // Handle errors here
             }
         }
+    }
+
+    fun setMovie(movie: Movie) {
+        foundMovie.value = movie
+        isMovieFound.value = true
     }
 }

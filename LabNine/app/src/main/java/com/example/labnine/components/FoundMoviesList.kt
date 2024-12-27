@@ -1,5 +1,6 @@
 package com.example.labnine.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,12 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.labnine.Screen
 import com.example.labnine.api.Movie
+import com.example.labnine.viewModels.SearchMovieViewModel
 import com.example.labnine.viewModels.SearchMoviesViewModel
 
 @Composable
-fun FoundMoviesList(contentPadding: PaddingValues) {
+fun FoundMoviesList(contentPadding: PaddingValues, navController: NavController) {
     val viewModel: SearchMoviesViewModel = viewModel()
     val foundMovies = viewModel.foundMovies.value
 
@@ -40,18 +44,24 @@ fun FoundMoviesList(contentPadding: PaddingValues) {
             contentPadding = contentPadding,
         ) {
             items(foundMovies) { movie ->
-                MovieItem(movie = movie)
+                MovieItem(movie = movie, navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, navController: NavController) {
+    val searchMovieViewModel: SearchMovieViewModel = viewModel()
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable {
+                searchMovieViewModel.setMovie(movie)
+                navController.navigate(Screen.AddMovie.createRoute(movie))
+            },
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Row(

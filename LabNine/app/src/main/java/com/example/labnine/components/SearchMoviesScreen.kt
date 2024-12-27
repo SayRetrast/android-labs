@@ -77,7 +77,7 @@ fun SearchMoviesScreen(navController: NavController) {
             )
         }
     ) { paddingValues ->
-        FoundMoviesList(contentPadding = paddingValues)
+        FoundMoviesList(contentPadding = paddingValues, navController = navController)
     }
 }
 
