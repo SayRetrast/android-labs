@@ -8,10 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.example.labnine.viewModels.SearchMovieViewModel
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,16 +28,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
-import androidx.navigation.NavController
-import com.example.labnine.Screen
 import com.example.labnine.db.Movie
 
 @Composable
-fun SavedMoviesList(contentPadding: PaddingValues, navController: NavController, movies: List<Movie>) {
+fun SavedMoviesList(contentPadding: PaddingValues,  movies: List<Movie>, checkedMovies: MutableState<Set<String>>) {
     if (movies.isEmpty()) {
         Box(
             modifier = Modifier
@@ -69,26 +66,22 @@ fun SavedMoviesList(contentPadding: PaddingValues, navController: NavController,
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             contentPadding = contentPadding,
+
         ) {
-            items(movies) { movie ->
-                SavedMovieItem(movie = movie, navController = navController)
+            items(movies, key = { movie -> movie.imdbID }) { movie ->
+                SavedMovieItem(movie = movie, checkedMovies = checkedMovies)
             }
         }
     }
 }
 
 @Composable
-fun SavedMovieItem(movie: Movie, navController: NavController) {
-    val searchMovieViewModel: SearchMovieViewModel = viewModel()
+fun SavedMovieItem(movie: Movie, checkedMovies: MutableState<Set<String>>) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-            .clickable {
-                searchMovieViewModel.setMovie(movie)
-                navController.navigate(Screen.AddMovie.createRoute(movie))
-            },
+            .padding(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Row(
@@ -131,6 +124,17 @@ fun SavedMovieItem(movie: Movie, navController: NavController) {
                     )
                 }
             }
+
+            Checkbox(
+                checked = movie.imdbID in checkedMovies.value,
+                onCheckedChange = { checked ->
+                    checkedMovies.value = if (checked) {
+                        checkedMovies.value + movie.imdbID
+                    } else {
+                        checkedMovies.value - movie.imdbID
+                    }
+                }
+            )
         }
     }
 }
