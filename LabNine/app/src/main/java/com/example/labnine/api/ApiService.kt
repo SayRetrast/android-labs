@@ -5,13 +5,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("")
+    @GET("/")
     suspend fun searchMovies(
-        @Query("apikey") apiKey: String = "3ac6d38",
         @Query("s") searchText: String,
+        @Query("apikey") apiKey: String = "3ac6d38",
     ): Response<SearchMoviesResponse>
 
-    @GET("")
+    @GET("/")
     suspend fun getMovie(
         @Query("apikey") apiKey: String = "3ac6d38",
         @Query("t") searchText: String,
@@ -19,10 +19,12 @@ interface ApiService {
 }
 
 data class SearchMoviesResponse(
-    val Search: List<SearchMovie>
+    val Search: List<Movie>,
+    val totalResults: String,
+    val Response: String
 )
 
-data class SearchMovie(
+data class Movie(
     val Title: String,
     val Year: String,
     val imdbID: String,
