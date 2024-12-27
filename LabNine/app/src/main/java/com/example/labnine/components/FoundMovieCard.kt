@@ -12,10 +12,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
+import com.example.labnine.db.db
 import com.example.labnine.viewModels.SearchMovieViewModel
 
 @Composable
 fun FoundMovieCard() {
+    val movieDao = db.movieDao()
+
     val viewModel: SearchMovieViewModel = viewModel()
 
     val movie = viewModel.foundMovie.value
@@ -67,7 +70,7 @@ fun FoundMovieCard() {
             }
 
             Button(
-                onClick = {},
+                onClick = { movieDao.insert(movie) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Add Movie")

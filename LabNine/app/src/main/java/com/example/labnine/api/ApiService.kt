@@ -25,5 +25,3 @@ data class SearchMoviesResponse(
     val totalResults: String,
     val Response: String
 )
-
-

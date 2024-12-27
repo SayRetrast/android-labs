@@ -1,6 +1,5 @@
 package com.example.labnine.components
 
-import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
@@ -15,12 +14,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.labnine.Screen
+import com.example.labnine.db.db
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieGalleryScreen(navController: NavController) {
+    val movieDao = db.movieDao()
+    val movies = movieDao.getAll()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -41,6 +43,8 @@ fun MovieGalleryScreen(navController: NavController) {
                 }
             )
         }
-    ) { }
+    ) { paddingValues ->
+        SavedMoviesList(contentPadding = paddingValues, navController = navController, movies = movies)
+    }
 }
 //
