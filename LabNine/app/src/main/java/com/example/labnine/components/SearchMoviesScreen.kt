@@ -80,4 +80,4 @@ fun SearchMoviesScreen(navController: NavController) {
         FoundMoviesList(contentPadding = paddingValues, navController = navController)
     }
 }
-
+//

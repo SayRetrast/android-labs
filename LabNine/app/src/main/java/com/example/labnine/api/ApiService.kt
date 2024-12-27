@@ -33,3 +33,4 @@ data class Movie(
     val Poster: String,
     val Genre: String?
 )
+//
