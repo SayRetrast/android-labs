@@ -116,8 +116,7 @@ fun AddMovieScreen(navController: NavController) {
                 Text(text = "Search Movie")
             }
 
-            FoundMovieCard()
+            FoundMovieCard(navController = navController)
         }
     }
 }
-//

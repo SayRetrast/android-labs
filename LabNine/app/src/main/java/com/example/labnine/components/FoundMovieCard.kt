@@ -11,12 +11,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.labnine.Screen
 import com.example.labnine.db.db
 import com.example.labnine.viewModels.SearchMovieViewModel
 
 @Composable
-fun FoundMovieCard() {
+fun FoundMovieCard(navController: NavController) {
     val movieDao = db.movieDao()
 
     val viewModel: SearchMovieViewModel = viewModel()
@@ -70,7 +72,10 @@ fun FoundMovieCard() {
             }
 
             Button(
-                onClick = { movieDao.insert(movie) },
+                onClick = {
+                    movieDao.insert(movie)
+                    navController.navigate(route = Screen.MovieGallery.route)
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Add Movie")
