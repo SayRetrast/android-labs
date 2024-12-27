@@ -20,5 +20,11 @@ fun NavigationStack() {
         ) {
             SearchMoviesScreen(navController)
         }
+
+        composable(
+            route = Screen.AddMovie.route
+        ) {
+            AddMovieScreen(navController)
+        }
     }
 }

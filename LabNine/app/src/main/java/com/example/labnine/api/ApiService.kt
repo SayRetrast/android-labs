@@ -15,7 +15,8 @@ interface ApiService {
     suspend fun getMovie(
         @Query("apikey") apiKey: String = "3ac6d38",
         @Query("t") searchText: String,
-    ): Response<SearchMoviesResponse>
+        @Query("y") year: String,
+    ): Response<Movie>
 }
 
 data class SearchMoviesResponse(
@@ -29,5 +30,6 @@ data class Movie(
     val Year: String,
     val imdbID: String,
     val Type: String,
-    val Poster: String
+    val Poster: String,
+    val Genre: String?
 )
