@@ -1,6 +1,6 @@
 package com.example.labnine
 
-import com.example.labnine.api.Movie
+import com.example.labnine.db.Movie
 import com.google.gson.Gson
 import java.net.URLEncoder
 

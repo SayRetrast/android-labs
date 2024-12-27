@@ -3,8 +3,8 @@ package com.example.labnine.viewModels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.labnine.api.Movie
 import com.example.labnine.api.RetrofitInstance
+import com.example.labnine.db.Movie
 import kotlinx.coroutines.launch
 
 class SearchMoviesViewModel: ViewModel() {

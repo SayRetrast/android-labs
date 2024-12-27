@@ -1,5 +1,6 @@
 package com.example.labnine.api
 
+import com.example.labnine.db.Movie
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -25,12 +26,4 @@ data class SearchMoviesResponse(
     val Response: String
 )
 
-data class Movie(
-    val Title: String,
-    val Year: String,
-    val imdbID: String,
-    val Type: String,
-    val Poster: String,
-    val Genre: String?
-)
-//
+

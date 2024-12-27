@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.labnine.Screen
-import com.example.labnine.api.Movie
+import com.example.labnine.db.Movie
 import com.example.labnine.viewModels.SearchMovieViewModel
 import com.example.labnine.viewModels.SearchMoviesViewModel
 
